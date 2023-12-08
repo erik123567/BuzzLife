@@ -1,0 +1,97 @@
+{
+  "doCards": [
+    { "type": "Do", "rating": 1, "action": "Stand up and then sit down." },
+    {
+      "type": "Do",
+      "rating": 2,
+      "action": "Give a compliment to the player on your right."
+    },
+    {
+      "type": "Do",
+      "rating": 3,
+      "action": "Imitate a famous celebrity for 30 seconds."
+    },
+    {
+      "type": "Do",
+      "rating": 4,
+      "action": "Dance without music for one minute."
+    },
+    { "type": "Do", "rating": 5, "action": "Tell a funny joke to the group." }
+  ],
+  "drinkCards": [
+    { "type": "Drink", "rating": 1, "action": "Take one sip of your drink." },
+    { "type": "Drink", "rating": 2, "action": "Take two sips of your drink." },
+    {
+      "type": "Drink",
+      "rating": 3,
+      "action": "Exchange drinks with the player to your left."
+    },
+    { "type": "Drink", "rating": 4, "action": "Finish half your drink." },
+    { "type": "Drink", "rating": 5, "action": "Choose someone to take a shot." }
+  ],
+  "devilCardsModifier1": [
+    { "type": "Devil", "rating": 6, "action": "Swap seats with anyone." },
+    {
+      "type": "Devil",
+      "rating": 7,
+      "action": "Give up your turn to the player of your choice."
+    },
+    { "type": "Devil", "rating": 8, "action": "Skip the next round." },
+    {
+      "type": "Devil",
+      "rating": 9,
+      "action": "No talking until your next turn."
+    },
+    {
+      "type": "Devil",
+      "rating": 10,
+      "action": "Play the rest of the game standing up."
+    }
+  ],
+  "devilCardsModifier2": [
+    { "type": "Devil", "rating": 6, "action": "Everyone takes a sip." },
+    {
+      "type": "Devil",
+      "rating": 7,
+      "action": "Start a group wave around the table."
+    },
+    { "type": "Devil", "rating": 8, "action": "Everyone swaps seats." },
+    {
+      "type": "Devil",
+      "rating": 9,
+      "action": "Group sing-along for a minute."
+    },
+    {
+      "type": "Devil",
+      "rating": 10,
+      "action": "Group challenge: Everyone does 5 push-ups."
+    }
+  ],
+  "devilCardsModifier3": [
+    {
+      "type": "Devil",
+      "rating": 6,
+      "action": "Text a random contact a funny meme."
+    },
+    {
+      "type": "Devil",
+      "rating": 7,
+      "action": "Post a silly selfie on social media."
+    },
+    {
+      "type": "Devil",
+      "rating": 8,
+      "action": "Call a friend and sing 'Happy Birthday'."
+    },
+    {
+      "type": "Devil",
+      "rating": 9,
+      "action": "Do an impression of a cartoon character."
+    },
+    {
+      "type": "Devil",
+      "rating": 10,
+      "action": "Make up a short rap about the game."
+    }
+  ]
+}
