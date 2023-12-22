@@ -12,10 +12,9 @@ public class WordDisplay : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.SetCardsReferences();
         InitializeWordList();
         Shuffle(wordList);
-        UpdateScores();
+
         DisplayRandomWord();
     }
 
@@ -38,11 +37,6 @@ public class WordDisplay : MonoBehaviour
         wordsLeftText.text = "Cards Left: " + wordList.Count.ToString();
     }
 
-    private void UpdateScores()
-    {
-        redTeamScoreText.text = GameManager.instance.redTeamScore.ToString();
-        blueTeamScoreText.text = GameManager.instance.blueTeamScore.ToString();
-    }
 
     private void DisplayRandomWord()
     {
@@ -53,7 +47,7 @@ public class WordDisplay : MonoBehaviour
         else
         {
 
-            GameManager.instance.EndRound();
+
             wordText.text = "No more words left.";
             // GameManager.instance.EndRound(); // Call this if you have a method to end the round.
         }
@@ -63,9 +57,9 @@ public class WordDisplay : MonoBehaviour
     {
         if (wordList.Count > 0)
         {
-            GameManager.instance.audioScript.playSfx1();
+
             // Update the score based on the active team
-            UpdateScore(GameManager.instance.activeTeam);
+
 
 
             // Remove the correctly guessed word from the list
@@ -93,22 +87,7 @@ public class WordDisplay : MonoBehaviour
         }
     }
 
-    private void UpdateScore(GameManager.Team team)
-    {
 
-        GameManager.instance.scoreThisTurn++;
-
-        if (team == GameManager.Team.Red)
-        {
-            GameManager.instance.IncrementRedTeamScore();
-            redTeamScoreText.text = GameManager.instance.redTeamScore.ToString();
-        }
-        else if (team == GameManager.Team.Blue)
-        {
-            GameManager.instance.IncrementBlueTeamScore();
-            blueTeamScoreText.text = GameManager.instance.blueTeamScore.ToString();
-        }
-    }
 
     // Utility method to shuffle a list
     private void Shuffle(List<string> list)

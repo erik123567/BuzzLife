@@ -5,16 +5,20 @@ using UnityEngine.UI;
 using System;
 using System.Reflection;
 using TMPro;
+using System.Diagnostics.Tracing;
+using System.Collections;
 
 public class CardGame : MonoBehaviour
 {
-    public Text doText, drinkText;
+    public Vector2 slideInStartPositionOffset = new Vector2(-500f, 0f); // Start position offset for slide in
+    public float slideInDuration = .2f; // Duration for slide
+    public TextMeshProUGUI doText, drinkText;
     public TextMeshProUGUI devil1Text, devil2Text, devil3Text;
 
-    public Image dot1, dot2;
-    public GameObject overlay1, overlay2, mainCanvas, overLayScreenMain;
+    //public Image dot1, dot2;
+    public GameObject mainCanvas, overLayScreenMain;
     private SimpleSlotMachine slotMachine;
-    public bool showDot1 = true;
+    //public bool showDot1 = true;
 
     // Define the Card class
     [Serializable]
@@ -53,31 +57,42 @@ public class CardGame : MonoBehaviour
         // InitializeWildcards();
         // SetCards();
         slotMachine = GetComponent<SimpleSlotMachine>();
-        overLayScreenMain.GetComponent<TextMove>().StartDoMove();
+        //overLayScreenMain.GetComponent<TextMove>().StartDoMove();
         LoadCardData();
         SelectCardsForTurn();
-        SetOverLayScreen();
+        // SetOverLayScreen();
 
 
     }
+
+
+    public void SwipedCard()
+    {
+        AnimateCardIn();
+        Debug.Log("swiped");
+        SetNextCard();
+    }
     public void SetNextCard()
     {
+        Debug.Log("SEtCArd");
         //reset button
         Debug.Log(slotMachine.drawButton);
         slotMachine.drawButton.gameObject.SetActive(true);
         //reenable image for dot
 
-
+        slotMachine.i1.sprite = null;
+        slotMachine.i2.sprite = null;
+        slotMachine.i3.sprite = null;
         //reset select
 
-        slotMachine.selectedImage.enabled = false;
+        //slotMachine.selectedImage.enabled = false;
         slotMachine.selectedImage = null;
         //reset border
-        Debug.Log("got here");
         SelectCardsForTurn();
     }
     private void SelectCardsForTurn()
     {
+        Debug.Log("select card for turn");
         // Roll the dice for severity
         int severity = RollDice();
 
@@ -94,6 +109,7 @@ public class CardGame : MonoBehaviour
     }
     private void DisplaySelectedCards()
     {
+        Debug.Log("last");
         // Display the selected cards on the screen
         // Implement your UI logic here to show the cards to the player
         // Debug.Log("Do Card: " + selectedDoCard.action);
@@ -116,6 +132,39 @@ public class CardGame : MonoBehaviour
         // Example: Print the first 'Do' card action
         Debug.Log("First 'Do' Card Action: " + cardCollection.doCards[1].action);
         Debug.Log("First 'Do' Card Action: " + cardCollection.devilCardsModifier1[1].action);
+    }
+
+    public void AnimateCardIn()
+    {
+        StartCoroutine(SlideInText(doText, selectedDoCard.action));
+        StartCoroutine(SlideInText(drinkText, selectedDrinkCard.action));
+        StartCoroutine(SlideInText(devil1Text, selectedDevilCardModifier1.action));
+        StartCoroutine(SlideInText(devil2Text, selectedDevilCardModifier2.action));
+        StartCoroutine(SlideInText(devil3Text, selectedDevilCardModifier3.action));
+    }
+    public IEnumerator SlideInText(TextMeshProUGUI textElement, string newText)
+    {
+        // Save the original position
+        Vector2 originalPosition = textElement.rectTransform.anchoredPosition;
+
+        // Set the start position off-screen
+        textElement.rectTransform.anchoredPosition = originalPosition + slideInStartPositionOffset;
+
+        // Set the new text
+        textElement.text = newText;
+
+        float elapsedTime = 0;
+
+        while (elapsedTime < slideInDuration)
+        {
+            float t = elapsedTime / slideInDuration;
+            textElement.rectTransform.anchoredPosition = Vector2.Lerp(originalPosition + slideInStartPositionOffset, originalPosition, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the text element is exactly at the original position
+        textElement.rectTransform.anchoredPosition = originalPosition;
     }
 
 
@@ -211,47 +260,47 @@ public class CardGame : MonoBehaviour
     //     }
     // }
 
-    public void ChangeOverLayScreen()
-    {
-        Debug.Log("ab");
-        showDot1 = !showDot1;
-        SetOverLayScreen();
-    }
+    // public void ChangeOverLayScreen()
+    // {
+    //     Debug.Log("ab");
+    //     showDot1 = !showDot1;
+    //     SetOverLayScreen();
+    // }
 
-    public void SetOverLayScreen()
-    {
-        Debug.Log("ra");
-        mainCanvas.SetActive(false);
+    // public void SetOverLayScreen()
+    // {
+    //     Debug.Log("ra");
+    //     mainCanvas.SetActive(false);
 
-        if (showDot1)
-        {
-            //Show screen 1
-            // show 1 on image for dots
-            dot1.color = Color.black;
-            dot2.color = Color.white;
-            overlay1.SetActive(true);
-            overlay2.SetActive(false);
+    //     if (showDot1)
+    //     {
+    //         //Show screen 1
+    //         // show 1 on image for dots
+    //         dot1.color = Color.black;
+    //         dot2.color = Color.white;
+    //         overlay1.SetActive(true);
+    //         overlay2.SetActive(false);
 
 
-        }
-        else
-        {
-            //Show screen 2
-            //navigation dots
-            dot1.color = Color.white;
-            dot2.color = Color.black;
-            overlay1.SetActive(false);
-            overlay2.SetActive(true);
-        }
-    }
+    //     }
+    //     else
+    //     {
+    //         //Show screen 2
+    //         //navigation dots
+    //         dot1.color = Color.white;
+    //         dot2.color = Color.black;
+    //         overlay1.SetActive(false);
+    //         overlay2.SetActive(true);
+    //     }
+    // }
 
-    public void SetStartScreen()
-    {
-        Debug.Log("Game has started");
-        overlay1.SetActive(false);
-        overlay2.SetActive(false);
-        mainCanvas.SetActive(true);
-        dot1.gameObject.SetActive(false);
-        dot2.gameObject.SetActive(false);
-    }
+    // public void SetStartScreen()
+    // {
+    //     Debug.Log("Game has started");
+    //     overlay1.SetActive(false);
+    //     overlay2.SetActive(false);
+    //     mainCanvas.SetActive(true);
+    //     dot1.gameObject.SetActive(false);
+    //     dot2.gameObject.SetActive(false);
+    // }
 }

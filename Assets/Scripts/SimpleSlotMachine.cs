@@ -11,15 +11,18 @@ public class SimpleSlotMachine : MonoBehaviour
     public Image i1, i2, i3;
     public Image selectedImage;
     public Button drawButton;
+    public Sprite devilSprite;
 
     private void Awake()
     {
         // Get the Image component from the circle indicator
         circleIndicatorImage = circleIndicator.GetComponent<Image>();
+        circleIndicatorImage.enabled = false;
     }
 
     public void StartSlotMachineEffect()
     {
+        Debug.Log("HERE");
         circleIndicatorImage.enabled = true;
         StartCoroutine(SlotMachineEffect());
         drawButton.gameObject.SetActive(false);
@@ -135,5 +138,22 @@ public class SimpleSlotMachine : MonoBehaviour
         circleIndicatorImage.enabled = false;
         // Handle the end of the slot machine effect here
         Debug.Log("Slot Machine effect has ended.");
+        // Flip cards to devil 
+        if (selectedImage == i1)
+        {
+            i2.sprite = devilSprite;
+            i3.sprite = devilSprite;
+        }
+        if (selectedImage == i2)
+        {
+            i1.sprite = devilSprite;
+            i3.sprite = devilSprite;
+        }
+        if (selectedImage == i3)
+        {
+            i1.sprite = devilSprite;
+            i2.sprite = devilSprite;
+        }
+
     }
 }
